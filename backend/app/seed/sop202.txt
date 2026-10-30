@@ -1,0 +1,42 @@
+Boiler Startup Procedure - SOP-202
+Equipment: Boiler B-101 | Document: SOP-202 | Rev: 3.0
+
+1. PURPOSE
+This Standard Operating Procedure describes the safe and efficient startup
+procedure for Boiler B-101 at the Main Processing Unit.
+2. PREREQUISITES
+- Verify fuel gas pressure between 3.5-4.5 barg at header FG-001
+- Ensure feed water tank level is above 65% (FT-101 > 65%)
+- Confirm instrument air pressure is at least 6.0 barg
+- All safety interlocks have been tested and are operational
+- Permit-to-Work (PTW) system clearance obtained
+3. STARTUP SEQUENCE
+Step 1: Open fuel gas isolation valve V-101 slowly. Monitor pressure gauge
+PG-101 for stable reading at 3.8 barg.
+Step 2: Initiate purge cycle. Run forced draft fan F-101 for 5 minutes
+at 30% speed to clear any residual gas from the combustion chamber.
+Step 3: Set burner management system BMS-101 to AUTO mode.
+Step 4: Verify flame scanner FS-101 shows NO FLAME before ignition.
+Step 5: Initiate pilot burner ignition. Confirm pilot flame within 3 seconds.
+Step 6: Open main fuel valve V-102 gradually. Target drum pressure ramp:
+0-10 barg: 0.5 bar/min
+10-30 barg: 1.0 bar/min
+30-50 barg: 0.75 bar/min
+Step 7: When drum pressure reaches 50 barg, switch from Bypass to Main
+steam line. Align valve V-201 to match header pressure.
+4. CRITICAL PARAMETERS
+- Drum Level must remain between 40-70% throughout startup
+- Superheater outlet temperature should not exceed 450 C
+- Furnace pressure must be maintained at -2 to +2 mbar
+- NOx emissions must stay below 50 ppm
+5. EMERGENCY CONDITIONS
+Abort startup immediately if any of the following occur:
+- Flame failure detected for more than 4 seconds
+- Drum level drops below 25%
+- Fuel gas pressure exceeds 5.5 barg or drops below 2.5 barg
+- Any safety interlock trips during startup
+6. DOCUMENTATION
+Record all startup parameters in Log Sheet LS-B101. Notify Shift Supervisor
+upon reaching stable operating conditions (steady state for 30 minutes).
+
+

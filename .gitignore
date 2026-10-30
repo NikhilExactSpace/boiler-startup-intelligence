@@ -1,0 +1,25 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+backend/data/*.db
+backend/data/*.db-wal
+backend/data/*.db-shm
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Env / secrets
+.env
+.env.local
+
+# Runtime data (large demo asset stays local)
+backend/data/documents/DOC-8f4c5c66b2.pdf
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/

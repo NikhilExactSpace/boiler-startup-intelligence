@@ -1,0 +1,780 @@
+{
+  "schema_version": "1.0",
+  "curve_id": "b101-sop202-r3",
+  "boiler_id": "B-101",
+  "name": "Cold start to 50 barg - SOP-202 Rev 3.0",
+  "status": "approved",
+  "source": {
+    "document": "SOP-202",
+    "revision": "3.0",
+    "file_name": "SOP-202_B-101_Rev3.pdf",
+    "sha256": "",
+    "uploaded_by": "demo.seed",
+    "approved_by": "shift.engineer",
+    "approved_at": "2026-10-24T09:15:00+05:30",
+    "notes": "Extracted from the approved startup procedure. Values are transcribed, not inferred."
+  },
+  "time_origin": {
+    "type": "startup_detected",
+    "tag": "B101.FDF_SPEED",
+    "description": "t = 0 at the start of the furnace purge (FDF speed rising to 30%)"
+  },
+  "phases": [
+    {
+      "key": "purge",
+      "label": "Furnace purge",
+      "order": 1,
+      "start_min": 0,
+      "end_min": 5,
+      "source_ref": "SOP-202 §3 Step 2",
+      "note": "FDF F-101 at 30% for 5 minutes to clear residual gas"
+    },
+    {
+      "key": "pilot",
+      "label": "Pilot ignition",
+      "order": 2,
+      "start_min": 5,
+      "end_min": 6,
+      "source_ref": "SOP-202 §3 Steps 3-5",
+      "note": "BMS AUTO, verify no flame, then pilot ignition within 3 s"
+    },
+    {
+      "key": "ramp_0_10",
+      "label": "Ramp 0-10 barg",
+      "order": 3,
+      "start_min": 6,
+      "end_min": 26,
+      "source_ref": "SOP-202 §3 Step 6",
+      "note": "Maximum 0.5 bar/min"
+    },
+    {
+      "key": "ramp_10_30",
+      "label": "Ramp 10-30 barg",
+      "order": 4,
+      "start_min": 26,
+      "end_min": 46,
+      "source_ref": "SOP-202 §3 Step 6",
+      "note": "Maximum 1.0 bar/min"
+    },
+    {
+      "key": "ramp_30_50",
+      "label": "Ramp 30-50 barg",
+      "order": 5,
+      "start_min": 46,
+      "end_min": 72.6667,
+      "source_ref": "SOP-202 §3 Step 6",
+      "note": "Maximum 0.75 bar/min"
+    },
+    {
+      "key": "line_switch",
+      "label": "Main steam line switch",
+      "order": 6,
+      "start_min": 72.6667,
+      "end_min": 77,
+      "source_ref": "SOP-202 §3 Step 7",
+      "note": "Switch from Bypass to Main steam at 50 barg, align V-201"
+    },
+    {
+      "key": "stabilize",
+      "label": "Stabilise",
+      "order": 7,
+      "start_min": 77,
+      "end_min": 107,
+      "source_ref": "SOP-202 §6",
+      "note": "Steady state for 30 minutes before notifying the shift supervisor"
+    }
+  ],
+  "signals": [
+    {
+      "key": "drum_pressure",
+      "label": "Drum pressure",
+      "unit": "barg",
+      "kind": "analog",
+      "decimals": 2,
+      "required": true,
+      "chart_order": 1,
+      "kairos": {
+        "metric": "B101.DRUM_PRESS",
+        "tags": {}
+      },
+      "design": [
+        {
+          "phase": "purge",
+          "points": [
+            {
+              "t": 0,
+              "value": 0
+            },
+            {
+              "t": 5,
+              "value": 0
+            }
+          ],
+          "tolerance": 0.5,
+          "tolerance_provenance": "analytics_default",
+          "source_ref": "SOP-202 §3 Step 2"
+        },
+        {
+          "phase": "pilot",
+          "points": [
+            {
+              "t": 5,
+              "value": 0
+            },
+            {
+              "t": 6,
+              "value": 0
+            }
+          ],
+          "tolerance": 0.5,
+          "tolerance_provenance": "analytics_default",
+          "source_ref": "SOP-202 §3 Step 5"
+        },
+        {
+          "phase": "ramp_0_10",
+          "points": [
+            {
+              "t": 6,
+              "value": 0
+            },
+            {
+              "t": 26,
+              "value": 10
+            }
+          ],
+          "tolerance": 0.8,
+          "tolerance_provenance": "analytics_default",
+          "max_rate_per_min": 0.5,
+          "rate_direction": "up",
+          "source_ref": "SOP-202 §3 Step 6"
+        },
+        {
+          "phase": "ramp_10_30",
+          "points": [
+            {
+              "t": 26,
+              "value": 10
+            },
+            {
+              "t": 46,
+              "value": 30
+            }
+          ],
+          "tolerance": 0.8,
+          "tolerance_provenance": "analytics_default",
+          "max_rate_per_min": 1.0,
+          "rate_direction": "up",
+          "source_ref": "SOP-202 §3 Step 6"
+        },
+        {
+          "phase": "ramp_30_50",
+          "points": [
+            {
+              "t": 46,
+              "value": 30
+            },
+            {
+              "t": 72.6667,
+              "value": 50
+            }
+          ],
+          "tolerance": 0.8,
+          "tolerance_provenance": "analytics_default",
+          "max_rate_per_min": 0.75,
+          "rate_direction": "up",
+          "source_ref": "SOP-202 §3 Step 6"
+        },
+        {
+          "phase": "line_switch",
+          "points": [
+            {
+              "t": 72.6667,
+              "value": 50
+            },
+            {
+              "t": 77,
+              "value": 50
+            }
+          ],
+          "tolerance": 1.0,
+          "tolerance_provenance": "analytics_default",
+          "source_ref": "SOP-202 §3 Step 7"
+        },
+        {
+          "phase": "stabilize",
+          "points": [
+            {
+              "t": 77,
+              "value": 50
+            },
+            {
+              "t": 107,
+              "value": 50
+            }
+          ],
+          "tolerance": 0.8,
+          "tolerance_provenance": "analytics_default",
+          "source_ref": "SOP-202 §6"
+        }
+      ],
+      "milestones": [
+        {
+          "key": "p10",
+          "label": "10 barg reached",
+          "value": 10,
+          "source_ref": "SOP-202 §3 Step 6"
+        },
+        {
+          "key": "p30",
+          "label": "30 barg reached",
+          "value": 30,
+          "source_ref": "SOP-202 §3 Step 6"
+        },
+        {
+          "key": "p50",
+          "label": "50 barg reached",
+          "value": 50,
+          "source_ref": "SOP-202 §3 Step 7"
+        }
+      ],
+      "limits": []
+    },
+    {
+      "key": "drum_level",
+      "label": "Drum level",
+      "unit": "%",
+      "kind": "analog",
+      "decimals": 1,
+      "required": true,
+      "chart_order": 2,
+      "kairos": {
+        "metric": "B101.DRUM_LEVEL",
+        "tags": {}
+      },
+      "design": [],
+      "limits": [
+        {
+          "key": "drum_level_band",
+          "op": "between",
+          "min": 40,
+          "max": 70,
+          "severity": "watch",
+          "label": "SOP control band 40-70%",
+          "min_duration_min": 1,
+          "source_ref": "SOP-202 §4"
+        },
+        {
+          "key": "drum_level_abort",
+          "op": "gte",
+          "value": 25,
+          "severity": "abort",
+          "label": "Abort below 25%",
+          "source_ref": "SOP-202 §5"
+        }
+      ],
+      "milestones": []
+    },
+    {
+      "key": "superheater_outlet_temp",
+      "label": "Superheater outlet temp",
+      "unit": "°C",
+      "kind": "analog",
+      "decimals": 0,
+      "required": true,
+      "chart_order": 3,
+      "kairos": {
+        "metric": "B101.SH_OUTLET_TEMP",
+        "tags": {}
+      },
+      "design": [],
+      "limits": [
+        {
+          "key": "sh_temp_max",
+          "op": "lte",
+          "value": 450,
+          "severity": "watch",
+          "label": "Do not exceed 450 °C",
+          "min_duration_min": 1,
+          "source_ref": "SOP-202 §4"
+        }
+      ],
+      "milestones": []
+    },
+    {
+      "key": "nox",
+      "label": "NOx emissions",
+      "unit": "ppm",
+      "kind": "analog",
+      "decimals": 0,
+      "required": true,
+      "chart_order": 4,
+      "kairos": {
+        "metric": "B101.NOX",
+        "tags": {}
+      },
+      "design": [],
+      "limits": [
+        {
+          "key": "nox_max",
+          "op": "lte",
+          "value": 50,
+          "severity": "watch",
+          "label": "Stay below 50 ppm",
+          "min_duration_min": 0.5,
+          "source_ref": "SOP-202 §4"
+        }
+      ],
+      "milestones": []
+    },
+    {
+      "key": "furnace_pressure",
+      "label": "Furnace pressure",
+      "unit": "mbar",
+      "kind": "analog",
+      "decimals": 1,
+      "required": true,
+      "chart_order": 5,
+      "kairos": {
+        "metric": "B101.FURNACE_PRESS",
+        "tags": {}
+      },
+      "design": [],
+      "limits": [
+        {
+          "key": "furnace_pressure_band",
+          "op": "between",
+          "min": -2,
+          "max": 2,
+          "severity": "watch",
+          "label": "Maintain -2 to +2 mbar",
+          "min_duration_min": 1,
+          "source_ref": "SOP-202 §4"
+        }
+      ],
+      "milestones": []
+    },
+    {
+      "key": "fuel_gas_pressure",
+      "label": "Fuel gas pressure",
+      "unit": "barg",
+      "kind": "analog",
+      "decimals": 2,
+      "required": true,
+      "chart_order": 6,
+      "kairos": {
+        "metric": "B101.FG_PRESS",
+        "tags": {}
+      },
+      "design": [
+        {
+          "phase": "purge",
+          "points": [
+            {
+              "t": 0,
+              "value": 3.8
+            },
+            {
+              "t": 107,
+              "value": 3.8
+            }
+          ],
+          "tolerance": 0.3,
+          "tolerance_provenance": "analytics_default",
+          "source_ref": "SOP-202 §3 Step 1"
+        }
+      ],
+      "limits": [
+        {
+          "key": "fg_pressure_abort",
+          "op": "between",
+          "min": 2.5,
+          "max": 5.5,
+          "severity": "abort",
+          "label": "Abort outside 2.5-5.5 barg",
+          "source_ref": "SOP-202 §5"
+        }
+      ],
+      "milestones": []
+    },
+    {
+      "key": "fdf_speed",
+      "label": "FDF speed",
+      "unit": "%",
+      "kind": "analog",
+      "decimals": 0,
+      "required": true,
+      "chart_order": 7,
+      "kairos": {
+        "metric": "B101.FDF_SPEED",
+        "tags": {}
+      },
+      "design": [
+        {
+          "phase": "purge",
+          "points": [
+            {
+              "t": 0,
+              "value": 0
+            },
+            {
+              "t": 0.5,
+              "value": 30
+            },
+            {
+              "t": 5,
+              "value": 30
+            }
+          ],
+          "tolerance": 3,
+          "tolerance_provenance": "analytics_default",
+          "source_ref": "SOP-202 §3 Step 2"
+        },
+        {
+          "phase": "pilot",
+          "points": [
+            {
+              "t": 5,
+              "value": 32
+            },
+            {
+              "t": 6,
+              "value": 32
+            }
+          ],
+          "tolerance": 3,
+          "tolerance_provenance": "analytics_default",
+          "source_ref": "SOP-202 §3 Step 3"
+        },
+        {
+          "phase": "ramp_0_10",
+          "points": [
+            {
+              "t": 6,
+              "value": 32
+            },
+            {
+              "t": 72.6667,
+              "value": 55
+            }
+          ],
+          "tolerance": 4,
+          "tolerance_provenance": "analytics_default",
+          "source_ref": "SOP-202 §3 Step 6"
+        },
+        {
+          "phase": "stabilize",
+          "points": [
+            {
+              "t": 72.6667,
+              "value": 55
+            },
+            {
+              "t": 107,
+              "value": 55
+            }
+          ],
+          "tolerance": 3,
+          "tolerance_provenance": "analytics_default",
+          "source_ref": "SOP-202 §6"
+        }
+      ],
+      "limits": [],
+      "milestones": []
+    },
+    {
+      "key": "flame_detected",
+      "label": "Flame scanner",
+      "unit": "",
+      "kind": "state",
+      "decimals": 0,
+      "required": true,
+      "chart_order": 8,
+      "kairos": {
+        "metric": "B101.FLAME_SCANNER",
+        "tags": {}
+      },
+      "design": [
+        {
+          "phase": "pilot",
+          "points": [
+            {
+              "t": 0,
+              "value": 0
+            },
+            {
+              "t": 5,
+              "value": 0
+            },
+            {
+              "t": 5.05,
+              "value": 1
+            },
+            {
+              "t": 107,
+              "value": 1
+            }
+          ],
+          "tolerance_provenance": "analytics_default",
+          "source_ref": "SOP-202 §3 Step 5"
+        }
+      ],
+      "limits": [
+        {
+          "key": "flame_loss_abort",
+          "op": "eq",
+          "value": 1,
+          "severity": "abort",
+          "label": "Flame failure > 4 s",
+          "active_from_event": "signal_first_truthy",
+          "hold_seconds": 4,
+          "source_ref": "SOP-202 §5"
+        }
+      ],
+      "milestones": []
+    },
+    {
+      "key": "fuel_gas_header_temp",
+      "label": "Fuel gas header temp",
+      "unit": "°C",
+      "kind": "analog",
+      "decimals": 1,
+      "required": false,
+      "chart_order": 11,
+      "kairos": {
+        "metric": "B101.FG_HEADER_TEMP",
+        "tags": {}
+      },
+      "design": [],
+      "limits": [],
+      "milestones": []
+    },
+    {
+      "key": "fw_tank_level",
+      "label": "Feed water tank level",
+      "unit": "%",
+      "kind": "analog",
+      "decimals": 1,
+      "required": true,
+      "chart_order": 9,
+      "kairos": {
+        "metric": "B101.FW_TANK_LEVEL",
+        "tags": {}
+      },
+      "design": [],
+      "limits": [],
+      "milestones": []
+    },
+    {
+      "key": "instrument_air_pressure",
+      "label": "Instrument air pressure",
+      "unit": "barg",
+      "kind": "analog",
+      "decimals": 2,
+      "required": true,
+      "chart_order": 10,
+      "kairos": {
+        "metric": "B101.INST_AIR_PRESS",
+        "tags": {}
+      },
+      "design": [],
+      "limits": [],
+      "milestones": []
+    },
+    {
+      "key": "main_steam_flow",
+      "label": "Main steam flow",
+      "unit": "t/h",
+      "kind": "analog",
+      "decimals": 2,
+      "required": false,
+      "chart_order": 12,
+      "kairos": {
+        "metric": "B101.MS_FLOW",
+        "tags": {}
+      },
+      "design": [],
+      "limits": [],
+      "milestones": []
+    },
+    {
+      "key": "main_steam_pressure",
+      "label": "Main steam pressure",
+      "unit": "barg",
+      "kind": "analog",
+      "decimals": 2,
+      "required": false,
+      "chart_order": 13,
+      "kairos": {
+        "metric": "B101.MS_PRESS",
+        "tags": {}
+      },
+      "design": [],
+      "limits": [],
+      "milestones": []
+    },
+    {
+      "key": "main_steam_temp",
+      "label": "Main steam temperature",
+      "unit": "°C",
+      "kind": "analog",
+      "decimals": 1,
+      "required": false,
+      "chart_order": 14,
+      "kairos": {
+        "metric": "B101.MS_TEMP",
+        "tags": {}
+      },
+      "design": [],
+      "limits": [],
+      "milestones": []
+    },
+    {
+      "key": "reheat_steam_temp",
+      "label": "Reheat steam temperature",
+      "unit": "°C",
+      "kind": "analog",
+      "decimals": 1,
+      "required": false,
+      "chart_order": 15,
+      "kairos": {
+        "metric": "B101.RH_TEMP",
+        "tags": {}
+      },
+      "design": [],
+      "limits": [],
+      "milestones": []
+    },
+    {
+      "key": "reheat_steam_pressure",
+      "label": "Reheat steam pressure",
+      "unit": "barg",
+      "kind": "analog",
+      "decimals": 2,
+      "required": false,
+      "chart_order": 16,
+      "kairos": {
+        "metric": "B101.RH_PRESS",
+        "tags": {}
+      },
+      "design": [],
+      "limits": [],
+      "milestones": []
+    },
+    {
+      "key": "turbine_speed",
+      "label": "Turbine speed",
+      "unit": "rpm",
+      "kind": "analog",
+      "decimals": 0,
+      "required": false,
+      "chart_order": 17,
+      "kairos": {
+        "metric": "B101.TURBINE_SPEED",
+        "tags": {}
+      },
+      "design": [],
+      "limits": [],
+      "milestones": []
+    },
+    {
+      "key": "turbine_flow",
+      "label": "Turbine flow",
+      "unit": "t/h",
+      "kind": "analog",
+      "decimals": 2,
+      "required": false,
+      "chart_order": 18,
+      "kairos": {
+        "metric": "B101.TURBINE_FLOW",
+        "tags": {}
+      },
+      "design": [],
+      "limits": [],
+      "milestones": []
+    },
+    {
+      "key": "load_mw",
+      "label": "Load",
+      "unit": "MW",
+      "kind": "analog",
+      "decimals": 1,
+      "required": false,
+      "chart_order": 19,
+      "kairos": {
+        "metric": "B101.LOAD_MW",
+        "tags": {}
+      },
+      "design": [],
+      "limits": [],
+      "milestones": []
+    }
+  ],
+  "prerequisites": [
+    {
+      "key": "fg_pressure_ready",
+      "label": "Fuel gas pressure 3.5-4.5 barg",
+      "signal_key": "fuel_gas_pressure",
+      "op": "between",
+      "min": 3.5,
+      "max": 4.5,
+      "mode": "auto",
+      "window_min": 15,
+      "source_ref": "SOP-202 §2"
+    },
+    {
+      "key": "fw_level_ready",
+      "label": "Feed water tank level above 65%",
+      "signal_key": "fw_tank_level",
+      "op": "gt",
+      "value": 65,
+      "mode": "auto",
+      "window_min": 15,
+      "source_ref": "SOP-202 §2"
+    },
+    {
+      "key": "instrument_air_ready",
+      "label": "Instrument air at least 6.0 barg",
+      "signal_key": "instrument_air_pressure",
+      "op": "gte",
+      "value": 6.0,
+      "mode": "auto",
+      "window_min": 15,
+      "source_ref": "SOP-202 §2"
+    },
+    {
+      "key": "interlocks_tested",
+      "label": "Safety interlocks tested and operational",
+      "mode": "manual",
+      "source_ref": "SOP-202 §2"
+    },
+    {
+      "key": "ptw_obtained",
+      "label": "Permit-to-Work clearance obtained",
+      "mode": "manual",
+      "source_ref": "SOP-202 §2"
+    }
+  ],
+  "manual_criteria": [
+    {
+      "key": "interlock_trip",
+      "label": "Safety interlock trip during startup",
+      "detail": "SOP requires immediate abort, but the DCS cannot confirm intent. Operator confirmation required.",
+      "source_ref": "SOP-202 §5"
+    },
+    {
+      "key": "steam_line_alignment",
+      "label": "Bypass to Main steam line alignment (V-201)",
+      "detail": "Valve lineup is an operator action; tag state alone is not sufficient evidence.",
+      "source_ref": "SOP-202 §3 Step 7"
+    }
+  ],
+  "notes": [
+    "Phase durations for the ramp windows are derived from the approved ramp rates: 10 bar at 0.5 bar/min = 20 min, 20 bar at 1.0 bar/min = 20 min, 20 bar at 0.75 bar/min = 26.67 min.",
+    "Analytics tolerances ('analytics_default') only drive deviation reporting. They are not safety limits and are not document-sourced.",
+    "Every limit above is transcribed from SOP-202. The platform does not invent limits and does not decide whether the boiler is safe to operate."
+  ],
+  "extras": {
+    "document_text": "sop202.txt",
+    "control_bands_are_not_trip_limits": true
+  }
+}
